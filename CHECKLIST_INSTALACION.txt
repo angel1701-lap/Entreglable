@@ -1,0 +1,163 @@
+╔════════════════════════════════════════════════════════════════════════╗
+║                                                                        ║
+║                    CHECKLIST DE INSTALACION                            ║
+║              Sistema Municipal con IA - TensorFlow 2.0                 ║
+║                                                                        ║
+╚════════════════════════════════════════════════════════════════════════╝
+
+📋 REQUISITOS PREVIOS:
+
+[ ] Python 3.8 o superior instalado
+    └─ Verificar: python --version
+    └─ Descargar: https://www.python.org/downloads/
+
+[ ] Node.js 18 o superior instalado
+    └─ Verificar: node --version
+    └─ Descargar: https://nodejs.org/
+
+[ ] XAMPP instalado
+    └─ Descargar: https://www.apachefriends.org/
+
+[ ] Tesseract OCR instalado (opcional, para OCR de imágenes)
+    └─ Descargar: https://github.com/UB-Mannheim/tesseract/wiki
+
+═══════════════════════════════════════════════════════════════════════════
+
+🗄️ CONFIGURACION DE BASE DE DATOS:
+
+[ ] XAMPP Control Panel abierto
+[ ] MySQL iniciado (botón "Start" junto a MySQL)
+[ ] phpMyAdmin abierto (http://localhost/phpmyadmin)
+[ ] Script init_db.sql ejecutado
+    └─ Ubicación: backend/init_db.sql
+    └─ Copiar contenido → Pegar en pestaña SQL → Ejecutar
+[ ] Base de datos "municipalidad_db" creada
+[ ] Tabla "tramites" visible en phpMyAdmin
+
+═══════════════════════════════════════════════════════════════════════════
+
+🤖 MODELO ML (TensorFlow):
+
+[ ] Entorno virtual creado (ml_model/venv/)
+[ ] Dependencias instaladas
+    └─ TensorFlow 2.15.0
+    └─ Scikit-learn, Pandas, NumPy, etc.
+[ ] Modelo entrenado exitosamente
+[ ] Archivos generados:
+    [ ] model_prioridad.h5
+    [ ] model_tipo.h5
+    [ ] model_artifacts.pkl
+    [ ] model_metadata.json
+
+═══════════════════════════════════════════════════════════════════════════
+
+🔧 BACKEND (FastAPI):
+
+[ ] Entorno virtual creado (backend/venv/)
+[ ] Dependencias instaladas
+[ ] Archivo .env configurado
+    [ ] DB_HOST=localhost
+    [ ] DB_PORT=3306
+    [ ] DB_USER=root
+    [ ] DB_PASSWORD= (vacío para XAMPP)
+    [ ] DB_NAME=municipalidad_db
+    [ ] ML_API_URL=http://localhost:8001
+[ ] Carpeta uploads/ creada
+
+═══════════════════════════════════════════════════════════════════════════
+
+🎨 FRONTEND (React + Vite):
+
+[ ] Dependencias instaladas (node_modules/)
+[ ] Sin errores de compilación
+
+═══════════════════════════════════════════════════════════════════════════
+
+✅ VERIFICACION FINAL:
+
+[ ] VERIFICAR_SISTEMA.bat ejecutado sin errores
+[ ] INSTALAR.bat ejecutado completamente
+[ ] PROBAR_SISTEMA.bat ejecutado exitosamente
+[ ] Modelos ML probados y funcionando
+
+═══════════════════════════════════════════════════════════════════════════
+
+🚀 INICIO DEL SISTEMA:
+
+[ ] INICIAR_TODO.bat ejecutado
+[ ] 3 ventanas abiertas:
+    [ ] ML API (puerto 8001)
+    [ ] Backend API (puerto 8000)
+    [ ] Frontend (puerto 5173)
+
+[ ] URLs funcionando:
+    [ ] http://localhost:5173 (Frontend)
+    [ ] http://localhost:8000 (Backend)
+    [ ] http://localhost:8001 (ML API)
+
+═══════════════════════════════════════════════════════════════════════════
+
+🧪 PRUEBA FUNCIONAL:
+
+[ ] Frontend carga correctamente
+[ ] Página de inicio visible
+[ ] Formulario "Subir Trámite" funciona
+[ ] Documento subido exitosamente
+[ ] ID de trámite generado
+[ ] Consulta de estado funciona
+[ ] Dashboard admin muestra trámites
+[ ] Clasificación ML funcionando (prioridad + tipo)
+
+═══════════════════════════════════════════════════════════════════════════
+
+📊 VERIFICACION DE MODELO ML:
+
+[ ] API ML responde en http://localhost:8001
+[ ] Endpoint /health retorna "healthy"
+[ ] Predicciones funcionan correctamente
+[ ] Confianza > 0.7 en predicciones
+[ ] Metadata del modelo visible
+
+═══════════════════════════════════════════════════════════════════════════
+
+⚠️ PROBLEMAS COMUNES RESUELTOS:
+
+[ ] MySQL corriendo antes de iniciar backend
+[ ] Modelos entrenados antes de iniciar ML API
+[ ] Puertos 8000, 8001, 5173 libres
+[ ] Variables de entorno configuradas
+[ ] TensorFlow instalado correctamente
+[ ] Sin errores de GPU (normal en CPU)
+
+═══════════════════════════════════════════════════════════════════════════
+
+📚 DOCUMENTACION CONSULTADA:
+
+[ ] LEEME_PRIMERO.txt
+[ ] COMO_USAR.md
+[ ] INSTALACION.md
+[ ] ml_model/README_TENSORFLOW.md
+[ ] FAQ.md
+
+═══════════════════════════════════════════════════════════════════════════
+
+🎉 SISTEMA LISTO PARA USAR
+
+Si todos los checkboxes están marcados, tu sistema está completamente
+funcional y listo para procesar trámites con IA.
+
+═══════════════════════════════════════════════════════════════════════════
+
+Próximos pasos:
+  1. Subir un trámite de prueba
+  2. Verificar clasificación automática
+  3. Consultar estado del trámite
+  4. Revisar dashboard administrativo
+
+═══════════════════════════════════════════════════════════════════════════
+
+Versión: 2.0
+Framework: TensorFlow 2.15
+Estado: ✅ Completo
+
+═══════════════════════════════════════════════════════════════════════════
