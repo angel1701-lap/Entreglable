@@ -1,117 +1,81 @@
 # 🏛️ Sistema de Gestión de Trámites Municipales con IA
 
-Sistema completo para la **Municipalidad Provincial de Yau** que utiliza inteligencia artificial para clasificar y priorizar trámites automáticamente.
+Sistema de gestión de trámites con clasificación automática mediante **Inteligencia Artificial (TensorFlow)** para la Municipalidad Provincial de Yau.
 
-![Estado](https://img.shields.io/badge/Estado-Completo-success)
-![Python](https://img.shields.io/badge/Python-3.8+-blue)
-![React](https://img.shields.io/badge/React-19-61dafb)
-![MySQL](https://img.shields.io/badge/MySQL-XAMPP-orange)
+## 🏗️ Stack Tecnológico
 
-## 🏗️ Arquitectura
-
-- **Frontend**: React 19 + TypeScript + Vite + TailwindCSS
-- **Backend**: FastAPI + Python
+- **Frontend**: React 19 + Vite + TailwindCSS
+- **Backend**: FastAPI + SQLAlchemy
 - **Base de Datos**: MySQL (XAMPP)
-- **ML Model**: TensorFlow/Keras (redes neuronales para clasificación)
+- **ML**: TensorFlow 2.15 + Keras
 
-## 📋 Requisitos Previos
+## 📋 Requisitos
 
-1. **XAMPP** instalado y corriendo (Apache + MySQL)
-2. **Python 3.8+**
-3. **Node.js 18+**
-4. **Tesseract OCR** (para extracción de texto de imágenes)
+- Python 3.8+
+- Node.js 18+
+- XAMPP (MySQL)
+- Tesseract OCR (opcional)
 
-## 🚀 Inicio Rápido
+## 🚀 Instalación
 
-### Opción 1: Script Automático (Recomendado)
+### 1. Clonar Repositorio
+```bash
+git clone https://github.com/angel1701-lap/Entreglable.git
+cd Entreglable/Proyecto1
+```
 
-1. Asegúrate de tener XAMPP corriendo (MySQL)
-2. Doble clic en: **`INICIAR_TODO.bat`**
-3. Espera a que se abran las 3 ventanas
-4. Accede a: http://localhost:5173
+### 2. Base de Datos
+1. Iniciar MySQL en XAMPP
+2. Abrir phpMyAdmin: http://localhost/phpmyadmin
+3. Ejecutar: `backend/init_db.sql`
 
-### Opción 2: Manual
-
-Ver archivo **`INSTALACION.md`** para instrucciones detalladas.
-
----
-
-## 📚 Documentación
-
-- **[INSTALACION.md](INSTALACION.md)** - Guía completa de instalación paso a paso
-- **[GUIA_USO.md](GUIA_USO.md)** - Manual de usuario para ciudadanos y administradores
-- **[README.md](README.md)** - Este archivo (información general)
-
----
-
-## 🛠️ Instalación Detallada
-
-### 1. Configurar Base de Datos (XAMPP)
-
-1. Abrir XAMPP Control Panel
-2. Iniciar **Apache** y **MySQL**
-3. Abrir phpMyAdmin: `http://localhost/phpmyadmin`
-4. Ejecutar el script `backend/init_db.sql` para crear la base de datos
-
-### 2. Backend (FastAPI)
+### 3. Backend
 
 ```bash
-cd Proyecto1/backend
-
-# Crear entorno virtual
+cd backend
 python -m venv venv
-
-# Activar entorno virtual
-# Windows:
 venv\Scripts\activate
-# Linux/Mac:
-source venv/bin/activate
-
-# Instalar dependencias
 pip install -r requirements.txt
-
-# Copiar archivo de configuración
-copy .env.example .env
-
-# Editar .env con tus credenciales de MySQL
+cp .env.example .env
 ```
 
-### 3. Modelo ML
-
+### 4. Modelo ML
 ```bash
-cd Proyecto1/ml_model
-
-# Entrenar modelo (genera model.pkl)
+cd ml_model
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
 python train.py
-
-# Iniciar API del modelo
-python api_ml.py
 ```
 
-El modelo estará disponible en: `http://localhost:8001`
-
-### 4. Iniciar Backend
-
+### 5. Frontend
 ```bash
-cd Proyecto1/backend
-python main.py
-```
-
-El backend estará disponible en: `http://localhost:8000`
-
-### 5. Frontend (React)
-
-```bash
-cd Proyecto1/frontend
-
-# Instalar dependencias
+cd frontend
 npm install
+```
 
-# Iniciar servidor de desarrollo
+## ▶️ Iniciar Sistema
+
+```bash
+# Terminal 1 - ML API
+cd ml_model
+venv\Scripts\activate
+python api_ml.py
+
+# Terminal 2 - Backend
+cd backend
+venv\Scripts\activate
+python main.py
+
+# Terminal 3 - Frontend
+cd frontend
 npm run dev
 ```
 
-El frontend estará disponible en: `http://localhost:5173`
+**URLs**:
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8000
+- ML API: http://localhost:8001
 
 ## 📁 Estructura del Proyecto
 
@@ -215,45 +179,18 @@ La tabla principal `tramites` almacena:
 - Tesseract OCR debe estar instalado en el sistema
 - Para producción, configurar variables de entorno apropiadas
 
-## 🐛 Troubleshooting
+## 🔧 Configuración
 
-**Error de conexión a MySQL:**
-- Verificar que XAMPP MySQL esté corriendo
-- Revisar credenciales en `.env`
-- Verificar que la BD `municipalidad_db` exista
+Editar `backend/.env`:
+```env
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=municipalidad_db
+ML_API_URL=http://localhost:8001
+```
 
-**Error de OCR:**
-- Instalar Tesseract: https://github.com/tesseract-ocr/tesseract
-- Agregar Tesseract al PATH del sistema
+## 📝 Licencia
 
-**Error de CORS:**
-- Verificar que el frontend esté en `localhost:5173`
-- Ajustar `allow_origins` en `main.py` si es necesario
-
-**Error TensorFlow GPU:**
-- Normal si no tienes GPU NVIDIA
-- El modelo funciona perfectamente en CPU
-- Para silenciar warnings, ver `ml_model/README_TENSORFLOW.md`
-
-**Error "models not loaded":**
-- Ejecutar primero: `cd ml_model && python train.py`
-- Verificar que existan los archivos `.h5`
-
-## 🆕 Novedades - Versión 2.0
-
-### Migración a TensorFlow/Keras
-El sistema ahora usa **TensorFlow 2.15** en lugar de Scikit-learn:
-- ✅ Mejor escalabilidad con datasets grandes
-- ✅ Arquitectura de redes neuronales más flexible
-- ✅ Soporte para GPU (opcional)
-- ✅ Accuracy mejorado (~90-95%)
-
-**Documentación completa**: `ml_model/README_TENSORFLOW.md`  
-**Guía de migración**: `ml_model/MIGRACION_TENSORFLOW.md`
-
-## 📧 Soporte
-
-Para problemas o consultas:
-1. Revisar logs en consola de cada servicio
-2. Consultar `FAQ.md` para problemas comunes
-3. Ver `ml_model/README_TENSORFLOW.md` para temas de ML
+MIT License - Ver [LICENSE](LICENSE)

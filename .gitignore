@@ -71,3 +71,24 @@ htmlcov/
 *.tmp
 *.temp
 ~*
+
+# Documentacion innecesaria
+CHANGELOG*.md
+CHECKLIST*.txt
+COMO_USAR.md
+EMPEZAR_AQUI.txt
+ESTRUCTURA*.txt
+FAQ.md
+GIT_PUSH.bat
+GUIA_USO.md
+INSTRUCCIONES*.md
+LEEME_PRIMERO.txt
+MIGRACION*.txt
+MIGRACION*.md
+PREPARAR*.bat
+README_GITHUB.md
+RESUMEN*.md
+SUBIR*.txt
+QUICK_START*.md
+compare_models.py
+test_model.py
