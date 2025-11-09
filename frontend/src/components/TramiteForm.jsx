@@ -46,59 +46,81 @@ export default function TramiteForm({ onSubmitted }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 bg-white p-6 rounded-lg shadow">
-      <h2 className="text-xl font-bold text-gray-800">Enviar nuevo trámite</h2>
-
-      {message && <div className="text-red-600">{message}</div>}
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Correo electrónico</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-          required
-        />
+    <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-white border border-gray-200 rounded-sm shadow-sm">
+      <div className="border-b border-gray-200 bg-gray-50 px-6 py-4">
+        <h2 className="text-lg font-semibold text-gray-800">Enviar nuevo trámite</h2>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Tipo de trámite</label>
-        <select
-          name="tipo"
-          value={formData.tipo}
-          onChange={handleChange}
-          className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+      <div className="px-6 py-6 space-y-5">
+        {message && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-sm text-sm">
+            {message}
+          </div>
+        )}
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Correo electrónico
+          </label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="block w-full px-3 py-2 border border-gray-300 rounded-sm text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+            placeholder="ejemplo@correo.com"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tipo de trámite
+          </label>
+          <select
+            name="tipo"
+            value={formData.tipo}
+            onChange={handleChange}
+            className="block w-full px-3 py-2 border border-gray-300 rounded-sm text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
+          >
+            <option value="general">General</option>
+            <option value="licencia">Licencia de construcción</option>
+            <option value="denuncia">Denuncia o reclamo</option>
+            <option value="cv">Postulación a empleo (CV)</option>
+            <option value="certificado">Certificado</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Documento adjunto
+          </label>
+          <div className="border border-gray-300 rounded-sm px-3 py-2 bg-gray-50">
+            <input
+              type="file"
+              accept=".pdf,.jpg,.jpeg,.png"
+              onChange={handleFileChange}
+              className="block w-full text-sm text-gray-600 file:mr-4 file:py-1.5 file:px-3 file:rounded-sm file:border-0 file:text-sm file:font-medium file:bg-gray-700 file:text-white hover:file:bg-gray-800 file:cursor-pointer"
+              required
+            />
+          </div>
+          <p className="mt-1 text-xs text-gray-500">Formatos permitidos: PDF, JPG, PNG</p>
+        </div>
+      </div>
+
+      <div className="border-t border-gray-200 bg-gray-50 px-6 py-4">
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full py-2.5 px-4 rounded-sm text-sm font-medium transition-colors ${
+            loading 
+              ? 'bg-gray-400 text-gray-100 cursor-not-allowed' 
+              : 'bg-gray-800 text-white hover:bg-gray-900'
+          }`}
         >
-          <option value="general">General</option>
-          <option value="licencia">Licencia de construcción</option>
-          <option value="denuncia">Denuncia o reclamo</option>
-          <option value="cv">Postulación a empleo (CV)</option>
-          <option value="certificado">Certificado</option>
-        </select>
+          {loading ? 'Enviando...' : 'Enviar trámite'}
+        </button>
       </div>
-
-      <div>
-        <label className="block text-sm font-medium text-gray-700">Documento (PDF, JPG o PNG)</label>
-        <input
-          type="file"
-          accept=".pdf,.jpg,.jpeg,.png"
-          onChange={handleFileChange}
-          className="mt-1 block w-full text-sm text-gray-500"
-          required
-        />
-      </div>
-
-      <button
-        type="submit"
-        disabled={loading}
-        className={`w-full py-2 px-4 rounded-md text-white ${
-          loading ? 'bg-gray-500' : 'bg-blue-600 hover:bg-blue-700'
-        }`}
-      >
-        {loading ? 'Enviando...' : 'Enviar trámite'}
-      </button>
     </form>
   );
 }
