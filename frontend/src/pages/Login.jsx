@@ -100,9 +100,7 @@ export default function Login({ onLoginSuccess }) {
 
           {/* Footer */}
           <div className="border-t border-gray-200 bg-gray-50 px-8 py-4">
-            <p className="text-xs text-gray-500 text-center">
-              Credenciales de prueba: admin / admin123
-            </p>
+              
           </div>
         </div>
       </div>
