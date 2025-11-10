@@ -2,11 +2,12 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import TramiteList from '../components/TramiteList';
-import { getAllTramites } from '../services/api';
+import { getAllTramites, sendMessageToCitizen } from '../services/api';
 
 export default function DashboardAdmin() {
   const [tramites, setTramites] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [notification, setNotification] = useState(null);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -23,6 +24,25 @@ export default function DashboardAdmin() {
     fetchTramites();
   }, []);
 
+  // Función para enviar mensaje
+  const handleSendMessage = async (tramiteId, email, subject, message) => {
+    try {
+      await sendMessageToCitizen(tramiteId, email, subject, message);
+      setNotification({
+        type: 'success',
+        message: `✓ Mensaje enviado exitosamente a ${email}`
+      });
+      setTimeout(() => setNotification(null), 5000);
+    } catch (error) {
+      setNotification({
+        type: 'error',
+        message: '✗ Error al enviar el mensaje. Intente nuevamente.'
+      });
+      setTimeout(() => setNotification(null), 5000);
+      throw error;
+    }
+  };
+
   // Calcular estadísticas
   const stats = {
     total: tramites.length,
@@ -34,6 +54,19 @@ export default function DashboardAdmin() {
 
   return (
     <div className="space-y-6">
+      {/* Notificación */}
+      {notification && (
+        <div className={`fixed top-4 right-4 z-50 px-6 py-4 rounded-sm shadow-lg ${
+          notification.type === 'success' ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'
+        }`}>
+          <p className={`text-sm font-medium ${
+            notification.type === 'success' ? 'text-green-800' : 'text-red-800'
+          }`}>
+            {notification.message}
+          </p>
+        </div>
+      )}
+
       {/* Header del Dashboard */}
       <div className="bg-white border border-gray-200 rounded-sm shadow-sm p-6">
         <div className="flex justify-between items-start">
@@ -150,7 +183,7 @@ export default function DashboardAdmin() {
               <p className="text-gray-600 mt-4">No hay trámites registrados</p>
             </div>
           ) : (
-            <TramiteList tramites={tramites} />
+            <TramiteList tramites={tramites} onSendMessage={handleSendMessage} />
           )}
         </div>
       </div>

@@ -20,13 +20,13 @@ export default function Login({ onLoginSuccess }) {
     setError('');
 
     const result = login(formData.username, formData.password);
-    
+
     if (result.success) {
       onLoginSuccess();
     } else {
       setError(result.message);
     }
-    
+
     setLoading(false);
   };
 
@@ -88,11 +88,10 @@ export default function Login({ onLoginSuccess }) {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-2.5 px-4 rounded-sm text-sm font-medium transition-colors ${
-                loading 
-                  ? 'bg-gray-400 text-gray-100 cursor-not-allowed' 
-                  : 'bg-gray-800 text-white hover:bg-gray-900'
-              }`}
+              className={`w-full py-2.5 px-4 rounded-sm text-sm font-medium transition-colors ${loading
+                ? 'bg-gray-400 text-gray-100 cursor-not-allowed'
+                : 'bg-gray-800 text-white hover:bg-gray-900'
+                }`}
             >
               {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
             </button>
@@ -100,7 +99,7 @@ export default function Login({ onLoginSuccess }) {
 
           {/* Footer */}
           <div className="border-t border-gray-200 bg-gray-50 px-8 py-4">
-              
+
           </div>
         </div>
       </div>

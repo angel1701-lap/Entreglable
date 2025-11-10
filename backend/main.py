@@ -83,6 +83,39 @@ def list_tramites(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
     tramites = get_all_tramites(db, skip, limit)
     return [t.to_dict() for t in tramites]
 
+@app.post("/tramites/send-message")
+async def send_message_to_citizen(request: dict):
+    """
+    Enviar mensaje personalizado al ciudadano
+    """
+    from services.notify import send_custom_message
+    
+    tramite_id = request.get("tramite_id")
+    email = request.get("email")
+    subject = request.get("subject")
+    message = request.get("message")
+    
+    try:
+        success = send_custom_message(
+            email=email,
+            tramite_id=tramite_id,
+            subject=subject,
+            message=message
+        )
+        
+        if success:
+            return {
+                "message": "Mensaje enviado exitosamente",
+                "email": email,
+                "tramite_id": tramite_id
+            }
+        else:
+            raise HTTPException(status_code=500, detail="Error al enviar el mensaje")
+    
+    except Exception as e:
+        print(f"[ERROR] No se pudo enviar mensaje: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

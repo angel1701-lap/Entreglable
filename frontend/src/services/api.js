@@ -27,3 +27,22 @@ export const getAllTramites = async () => {
   }
   return res.json();
 };
+
+export const sendMessageToCitizen = async (tramiteId, email, subject, message) => {
+  const res = await fetch(`http://localhost:8000/tramites/send-message`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      tramite_id: tramiteId,
+      email: email,
+      subject: subject,
+      message: message
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`Error ${res.status}: ${res.statusText}`);
+  }
+  return res.json();
+};
