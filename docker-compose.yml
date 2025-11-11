@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # API de Machine Learning (TensorFlow)
+  ml_api:
+    build:
+      context: ./ml_model
+      dockerfile: Dockerfile
+    container_name: municipalidad_ml_api
+    restart: always
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./ml_model:/app
+    networks:
+      - municipalidad_network
+
+  # Backend API (FastAPI)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: municipalidad_backend
+    restart: always
+    environment:
+      # Usar MySQL de XAMPP en el host
+      DB_HOST: host.docker.internal
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ""
+      DB_NAME: municipalidad_db
+      ML_API_URL: http://ml_api:8001
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - backend_uploads:/app/uploads
+    depends_on:
+      - ml_api
+    networks:
+      - municipalidad_network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Frontend (React + Vite)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: municipalidad_frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - municipalidad_network
+    environment:
+      - VITE_API_URL=http://localhost:8000
+
+networks:
+  municipalidad_network:
+    driver: bridge
+
+volumes:
+  backend_uploads:

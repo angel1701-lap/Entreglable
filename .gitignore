@@ -92,3 +92,7 @@ SUBIR*.txt
 QUICK_START*.md
 compare_models.py
 test_model.py
+
+# Docker
+.env.docker
+docker-compose.override.yml
